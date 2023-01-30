@@ -1,0 +1,4 @@
+*.DS_Store
+
+/exercise1/gol.x
+/exercise1/snapshots/
