@@ -61,7 +61,7 @@ This code will perform the game evolutions (`static evolution`), for the input `
 
 ## Code details
 The source code is divided among 3 different files:
-- [gol.c](https://github.com/carlodenardin/FHPC/blob/main/exercise1/src/gol.c): main file that manages everything
-- [game.c](https://github.com/carlodenardin/FHPC/blob/main/exercise1/src/game.c): functions that are used to provide the evolutions of the game. The header file [game.h](https://github.com/carlodenardin/FHPC/blob/main/exercise1/src/game.h) contains the documentations of the functions
-- [rw.c](https://github.com/carlodenardin/FHPC/blob/main/exercise1/src/rw.c): functions that are used to read and write pgm files. The header file [rw.h](https://github.com/carlodenardin/FHPC/blob/main/exercise1/src/rw.h) contains the documentations of the functions
+- [gol.c](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/gol.c): main file that manages everything
+- [game.c](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/game.c): functions that are used to provide the evolutions of the game. The header file [game.h](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/game.h) contains the documentations of the functions
+- [rw.c](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/rw.c): functions that are used to read and write pgm files. The header file [rw.h](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/rw.h) contains the documentations of the functions
 
