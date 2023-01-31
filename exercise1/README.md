@@ -119,3 +119,42 @@ void static_evolution(int *grid, int *grid_ns, int rows, int cols) {
     }
 }
 ```
+
+### Send Receive Ghost Rows
+```c
+/**
+ * Exchange the ghost rows of the local grid with the upper and lower ranks using
+ * the MPI_Send and MPI_Recv functions.
+ *
+ * @param local_grid_wg: local grid with ghost rows and columns
+ * @param local_rows_wg: number of rows of the local grid with ghost rows
+ * @param local_cols_wg: number of columns of the local grid with ghost rows
+ * @param upper_rank: rank of the upper process
+ * @param lower_rank: rank of the lower process
+ */
+void exchange_ghost_rows(int *local_grid_wg, int local_rows_wg, int local_cols_wg, int upper_rank, int lower_rank) {
+    MPI_Send(&local_grid_wg[local_cols_wg], local_cols_wg, MPI_INT, upper_rank, 0, MPI_COMM_WORLD);
+    MPI_Recv(&local_grid_wg[(local_rows_wg - 1) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    
+    MPI_Send(&local_grid_wg[(local_rows_wg - 2) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 1, MPI_COMM_WORLD);
+    MPI_Recv(&local_grid_wg[0], local_cols_wg, MPI_INT, upper_rank, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+}
+```
+
+### Compute Ghost Columns
+```c
+/**
+ * Copy the last column of the local grid to the first column of the ghost columns
+ * and the first column of the local grid to the last column of the ghost columns.
+ * 
+ * @param local_grid_wg: local grid with ghost rows and columns
+ * @param local_rows_wg: number of rows of the local grid with ghost rows
+ * @param local_cols_wg: number of columns of the local grid with ghost rows
+ */
+void compute_ghost_cols(int *local_grid_wg, int local_rows_wg, int local_cols_wg) {
+    for(int i = 0; i < local_rows_wg; i++) {
+        local_grid_wg[i * local_cols_wg] = local_grid_wg[(i + 1) * local_cols_wg - 2];
+        local_grid_wg[(i + 1) * local_cols_wg - 1] = local_grid_wg[i * local_cols_wg + 1];
+    }
+}
+```
