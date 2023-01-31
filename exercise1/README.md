@@ -38,14 +38,14 @@ This code will generate the `pattern_random.pmg` image which as a dimension `100
 
 ### Run 1:
 ```
-mpi -np 4 gol.x -r -f pattern_random -n 100 -e 1 -s 0
+mpirun -np 4 gol.x -r -f pattern_random -n 100 -e 1 -s 0
 ```
 
 This code will perform the game evolutions (`static evolution`), for the input `pattern_random.pgm`, for `100 steps` and it will save only the last evolution state.
 
 ### Run 2:
 ```
-mpi -np 4 gol.x -r -f pattern_random -n 1000 -e 1 -s 1
+mpirun -np 4 gol.x -r -f pattern_random -n 1000 -e 1 -s 1
 ```
 
 This code will perform the game evolutions (`static evolution`), for the input `pattern_random.pgm`, for `1000 steps` and it will save an image of the state for each step.
