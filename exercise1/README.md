@@ -3,12 +3,12 @@
 ## How to compile
 To compile the executable
 ```
-make all
+srun -n 1 make all
 ```
 
 To cancel the executable:
 ```
-make clean
+srun -n 1 make clean
 ```
 
 
@@ -21,7 +21,7 @@ make clean
 | -f (name)| name of the random pmg image  |  required|
 
 ```
-mpi -np 1 gol.x -i -k 100 -f pattern_random
+mpirun -np 1 gol.x -i -k 100 -f pattern_random
 ```
 
 This code will generate the `pattern_random.pmg` image which as a dimension `100x100` in the main folder. The number of processes is indifferent since the generation will be executed in a serial way.
