@@ -71,21 +71,6 @@ void white_static_evolution(int *grid, int *grid_ns, int rows, int cols) {
     }
 }
 
-void ordered_evolution(int *grid, int rows, int cols) {
-    for(int i = 1; i < rows - 1; i++) {
-        for(int j = 1; j < cols - 1; j++) {
-            int count = count_alive_neighbors(grid, i, j, cols);
-            if (count < 2 || count > 3) {
-                grid[i * cols + j] = DEAD;
-            } else if (count == 3) {
-                grid[i * cols + j] = ALIVE;
-            } else {
-                grid[i * cols + j] = grid[i * cols + j];
-            }
-        }
-    }
-}
-
 void exchange_ghost_rows(int *local_grid_wg, int local_rows_wg, int local_cols_wg, int upper_rank, int lower_rank) {
     MPI_Send(&local_grid_wg[local_cols_wg], local_cols_wg, MPI_INT, upper_rank, 0, MPI_COMM_WORLD);
     MPI_Recv(&local_grid_wg[(local_rows_wg - 1) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);

@@ -16,8 +16,8 @@
 #define FOLDER_NAME "snapshots"
 #define PATTERNS_FOLDER "patterns"
 
-
-char * add_extension(char *file_name) {
+// DONE
+char * add_pgm_extension(char *file_name) {
     char *file_name_with_ext = malloc(strlen(file_name) + strlen(FILE_FORMAT) + 1);
     strcpy(file_name_with_ext, file_name);
     strcat(file_name_with_ext, FILE_FORMAT);
@@ -25,9 +25,7 @@ char * add_extension(char *file_name) {
     return file_name_with_ext;
 }
 
-/**
- * Create a folder if it doesn't exist (snapshots).
- */
+// DONE
 void create_folder() {
     struct stat st = {0};
 
@@ -69,7 +67,15 @@ void write_pgm_image(void *image, char *file_name, int rows, int cols) {
     return;
 }
 
-void write_pgm_image_(void *image, char *file_name, int rows, int cols) {
+/**
+ * Write a PGM image to a file. In this case the file is added to the current folder
+ *
+ * @param image The image data.
+ * @param file_name The name of the file.
+ * @param rows The number of rows.
+ * @param cols The number of columns.
+ */
+void write_random_pgm_image(void *image, char *file_name, int rows, int cols) {
 
     // File pointer
     FILE* image_file;
@@ -146,12 +152,7 @@ void * generate_gradient_with_input(int *grid, int rows, int cols) {
     return ptr;
 }
 
-/**
- * Given a PGM file, read the image data and return it as an array of unsigned
- * chars.
- *
- * @param file_name The name of the PGM file.
- */
+
 unsigned char *read_pgm(char *file_name) {
     int row = 0;
     FILE *fp = fopen(file_name, "rb");
@@ -180,13 +181,9 @@ unsigned char *read_pgm(char *file_name) {
     return data;
 }
 
-/**
- * Given a PGM file, read the number of columns specified in the header.
- *
- * @param file_name The name of the PGM file.
- */
+// DONE
 int read_rows(char *file_name) {
-    FILE *fp = fopen(add_extension(file_name), "rb");
+    FILE *fp = fopen(add_pgm_extension(file_name), "rb");
     char magic[3];
     int rows, cols, max_value;
 
@@ -205,13 +202,9 @@ int read_rows(char *file_name) {
     return rows;
 }
 
-/**
- * Given a PGM file, read the number of columns specified in the header.
- *
- * @param file_name The name of the PGM file.
- */
+// DONE
 int read_cols(char *file_name) {
-    FILE *fp = fopen(add_extension(file_name), "rb");
+    FILE *fp = fopen(add_pgm_extension(file_name), "rb");
     char magic[3];
     int rows, cols, max_value;
 
@@ -230,14 +223,7 @@ int read_cols(char *file_name) {
     return cols;
 }
 
-/**
- * Given a file_name and the dimension generate a PGM file with the specified
- * consisting in a PGM header and data (0 black, 255 white)
- *
- * @param file_name The name of the PGM file.
- * @param rows The number of rows.
- * @param cols The number of columns.
- */
+// DONE
 void generate_image_utils(char *file_name, int width, int height) {
     
     printf("Initializing condition\n");
@@ -248,35 +234,21 @@ void generate_image_utils(char *file_name, int width, int height) {
 
     printf("1. The image has been generated\n");
 
-    write_pgm_image_(image, file_name, width, height);
+    write_random_pgm_image(image, file_name, width, height);
 
     printf("2. The image has been written as %s\n", file_name);
 }
 
-/**
- * Given a file_name and the dimension read a PGM file with the specified
- * and save the data in the grid array.
- * @param file_name The name of the PGM file.
- * @param rows The number of rows.
- * @param cols The number of columns.
- */
+// DONE
 void read_image_utils(int *grid, char *file_name, int rows, int cols) {
-    unsigned char *image_data = read_pgm(add_extension(file_name));
+    unsigned char *image_data = read_pgm(add_pgm_extension(file_name));
 
     for (int i = 0; i < rows * cols; i++) {
         grid[i] = (int) image_data[i];
     }
 }
 
-/**
- * Given a file_name and the dimension save a PGM file with the specified
- * in the snapshop folder with this format: snapshot_0000<step>.pgm
- *
- * @param grid The grid to save.
- * @param rows The number of rows.
- * @param cols The number of columns.
- * @param step The step of the simulation.
- */
+// DONE
 void save_image_utils(int * grid, int rows, int cols, int step) {
     void *image = generate_gradient_with_input(grid, rows, cols);
 

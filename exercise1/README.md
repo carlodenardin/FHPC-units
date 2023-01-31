@@ -65,3 +65,57 @@ The source code is divided among 3 different files:
 - [game.c](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/game.c): functions that are used to provide the evolutions of the game. The header file [game.h](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/game.h) contains the documentations of the functions
 - [rw.c](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/rw.c): functions that are used to read and write pgm files. The header file [rw.h](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/rw.h) contains the documentations of the functions
 
+## Functions
+
+### Count alive neighbors
+```c
+/**
+ * Given a the grid and the position of a cell, returns the number of alive neighbors.
+ *
+ * @param grid: grid of the game
+ * @param i: row of the cell
+ * @param j: column of the cell
+ * @param cols: number of columns of the grid
+ */ 
+int count_alive_neighbors(int *grid, int i, int j, int cols) {
+    int alive_neighbors = 0;
+    for(int k = -1; k <= 1; k++) {
+        for(int l = -1; l <= 1; l++) {
+            if (k == 0 && l == 0) continue;
+            if (grid[(i + k) * cols + (j + l)] == ALIVE) alive_neighbors++;
+        }
+            
+    }
+    return alive_neighbors;
+}
+```
+
+### Static Evolution
+```c
+/**
+ * Given the current grid, the next state grid and the dimension of the grid, 
+ * compute the next state of the game with these steps:
+ * - for each cell, count the number of alive neighbors
+ * - if the cell has less than 2 or more than 3 alive neighbors, the cell dies
+ * - if the cell has 3 alive neighbors, the cell survives or becomes alive
+ * - if the cell has 2 alive neighbors, the cell state remains the same
+ *
+ * @param grid: grid of the game
+ * @param grid_ns: grid that will contain the next state
+ */ 
+void static_evolution(int *grid, int *grid_ns, int rows, int cols) {
+    #pragma omp parallel for schedule(static)
+    for(int i = 1; i < rows - 1; i++) {
+        for(int j = 1; j < cols - 1; j++) {
+            int count = count_alive_neighbors(grid, i, j, cols);
+            if (count < 2 || count > 3) {
+                grid_ns[i * cols + j] = DEAD;
+            } else if (count == 3) {
+                grid_ns[i * cols + j] = ALIVE;
+            } else {
+                grid_ns[i * cols + j] = grid[i * cols + j];
+            }
+        }
+    }
+}
+```
