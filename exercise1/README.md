@@ -56,7 +56,7 @@ This code will perform the game evolutions (`static evolution`), for the input `
 | Input | Result |
 | ------- | --- |
 | pattern_blinker | [Blinker GIF](https://imgur.com/ndWD6tX) |
-| pattern_pulsare | [Pulsar GIF](https://imgur.com/9OQdXyP) |
+| pattern_pulsar | [Pulsar GIF](https://imgur.com/9OQdXyP) |
 | pattern_ship | [Ship GIF](https://imgur.com/Wq9X5O7)  |
 
 ## Code details
