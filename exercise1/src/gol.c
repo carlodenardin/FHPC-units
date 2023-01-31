@@ -5,15 +5,14 @@ Purpose: This file contains an hybrid parallel implementation of the Game of Lif
 */
 
 #include <getopt.h>
+#include <omp.h>
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
-//#include <omp.h>
-
-#include "rw.h"
 #include "game.h"
+#include "rw.h"
 
 #define DEAD 255
 #define ALIVE 0

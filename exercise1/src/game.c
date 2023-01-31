@@ -1,8 +1,8 @@
+#include <omp.h>
 #include <stdlib.h>
 #include <stdio.h> 
 #include <mpi.h>
 #include <string.h>
-//#include <omp.h>
 
 #define ALIVE 0
 #define DEAD 255
@@ -20,7 +20,7 @@ int count_alive_neighbors(int *grid, int i, int j, int cols) {
 }
 
 void static_evolution(int *grid, int *grid_ns, int rows, int cols) {
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for(int i = 1; i < rows - 1; i++) {
         for(int j = 1; j < cols - 1; j++) {
             int count = count_alive_neighbors(grid, i, j, cols);
@@ -36,7 +36,7 @@ void static_evolution(int *grid, int *grid_ns, int rows, int cols) {
 }
 
 void black_static_evolution(int *grid, int *grid_ns, int rows, int cols) {
-    // #pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for(int i = 1; i < rows - 1; i++) {
         for(int j = 1; j < cols - 1; j++) {
             if (grid[i * cols + j] == ALIVE) {
@@ -54,7 +54,7 @@ void black_static_evolution(int *grid, int *grid_ns, int rows, int cols) {
 }
 
 void white_static_evolution(int *grid, int *grid_ns, int rows, int cols) {
-    //#pragma omp parallel for schedule(static)
+    #pragma omp parallel for schedule(static)
     for(int i = 1; i < rows - 1; i++) {
         for(int j = 1; j < cols - 1; j++) {
             if (grid[i * cols + j] == DEAD) {
