@@ -51,7 +51,7 @@ mpirun -np 4 gol.x -r -f pattern_random -n 1000 -e 1 -s 1
 This code will perform the game evolutions (`static evolution`), for the input `pattern_random.pgm`, for `1000 steps` and it will save an image of the state for each step.
 
 
-## Examples of common patterns
+## Examples of common patterns tested on this implementation with static evolution
 
 | Input | Result |
 | ------- | --- |
