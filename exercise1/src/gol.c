@@ -5,7 +5,7 @@ Purpose: This file contains an hybrid parallel implementation of the Game of Lif
 */
 
 #include <getopt.h>
-#include <omp.h>
+//#include <omp.h>
 #include <mpi.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -207,6 +207,9 @@ int main(int argc, char **argv) {
                 
                 // Exchange ghost rows and compute ghost columns
                 exchange_ghost_rows(local_grid_wg, local_rows_wg, local_cols_wg, upper_rank, lower_rank);
+
+                MPI_Barrier(MPI_COMM_WORLD);
+
                 compute_ghost_cols(local_grid_wg, local_rows_wg, local_cols_wg);
                 
                 // Perform the evolution
