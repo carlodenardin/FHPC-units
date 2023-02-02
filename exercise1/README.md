@@ -59,6 +59,12 @@ This code will perform the game evolutions (`static evolution`), for the input `
 | pattern_pulsar | [Pulsar GIF](https://imgur.com/9OQdXyP) |
 | pattern_ship | [Ship GIF](https://imgur.com/Wq9X5O7)  |
 
+These input example are located in the main folder. To try it:
+```
+mpirun -np 4 gol.x -r -f pattern_ship -n 100 -e 1 -s 1
+```
+They works with the static evolution.
+
 ## Code details
 The source code is divided among 3 different files:
 - [gol.c](https://github.com/carlodenardin/FHPC-units/blob/main/exercise1/src/gol.c): main file that manages everything
