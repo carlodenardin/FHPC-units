@@ -72,14 +72,19 @@ void white_static_evolution(int *grid, int *grid_ns, int rows, int cols) {
 }
 
 void exchange_ghost_rows(int *local_grid_wg, int local_rows_wg, int local_cols_wg, int upper_rank, int lower_rank) {
-    MPI_Request request1, request2;
+    /*MPI_Request request1, request2;
     MPI_Isend(&local_grid_wg[local_cols_wg], local_cols_wg, MPI_INT, upper_rank, 0, MPI_COMM_WORLD, &request1);
     MPI_Irecv(&local_grid_wg[(local_rows_wg - 1) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 0, MPI_COMM_WORLD, &request1);
     
     MPI_Isend(&local_grid_wg[(local_rows_wg - 2) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 1, MPI_COMM_WORLD, &request2);
     MPI_Irecv(&local_grid_wg[0], local_cols_wg, MPI_INT, upper_rank, 1, MPI_COMM_WORLD, &request2);
     MPI_Wait(&request1, MPI_STATUS_IGNORE);
-    MPI_Wait(&request2, MPI_STATUS_IGNORE);
+    MPI_Wait(&request2, MPI_STATUS_IGNORE);*/
+    MPI_Send(&local_grid_wg[local_cols_wg], local_cols_wg, MPI_INT, upper_rank, 0, MPI_COMM_WORLD);
+    MPI_Recv(&local_grid_wg[(local_rows_wg - 1) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+    
+    MPI_Send(&local_grid_wg[(local_rows_wg - 2) * local_cols_wg], local_cols_wg, MPI_INT, lower_rank, 1, MPI_COMM_WORLD);
+    MPI_Recv(&local_grid_wg[0], local_cols_wg, MPI_INT, upper_rank, 1, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 }
 
 void compute_ghost_cols(int *local_grid_wg, int local_rows_wg, int local_cols_wg) {
